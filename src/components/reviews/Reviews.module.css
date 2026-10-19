@@ -1,0 +1,39 @@
+/* The hero photo stays fixed behind the page (a fixed layer rather than background-attachment: fixed, which iOS ignores). */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--navy-950);
+}
+.photo {
+  object-fit: cover;
+}
+.page {
+  position: relative;
+  min-height: 60vh;
+}
+.back {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+/* The original link here is dark blue to stand out against the sky in the photo */
+.back :global(a) span:first-child {
+  color: #003658;
+}
+.back :global(a):hover span:first-child {
+  color: #00c8ff;
+}
+.widget {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+.widget > :global(div) {
+  width: 100%;
+}
+@media (max-width: 479px) {
+  .back {
+    margin-top: 1px;
+  }
+}

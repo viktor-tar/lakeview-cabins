@@ -1,0 +1,41 @@
+.page {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 5rem;
+  color: var(--beige-100);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+}
+.back {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+.page h1 {
+  margin: 0 0 1rem;
+  font-family: var(--font-brand);
+  font-size: 2.5rem;
+  font-weight: 400;
+  line-height: 1.1;
+}
+.page h2 {
+  margin: 2.5rem 0 0.75rem;
+  color: var(--sky-200);
+  font-family: var(--font-brand);
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+.lead {
+  color: var(--sky-300);
+  font-size: 18px;
+}
+.page ul {
+  padding-left: 1.25rem;
+}
+.page li + li {
+  margin-top: 0.5rem;
+}
+.page a:not([class]) {
+  color: var(--sky-200);
+}
