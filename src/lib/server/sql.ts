@@ -1,0 +1,1 @@
+export { getSql } from "@/db";

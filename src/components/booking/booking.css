@@ -1,0 +1,697 @@
+/*
+ * Lakeview booking widget. Everything is scoped under .lvb.
+ * Colours fall back to the site's own variables when they exist on the page.
+ */
+.lvb {
+  --lvb-navy: var(--color--navy-950, #08131f);
+  --lvb-sky: var(--color--sky-200, #a9dbe9);
+  --lvb-sky-2: var(--color--sky-300, #99c0d9);
+  --lvb-teal: #4f9fb4;
+  --lvb-teal-strong: #5fb3c8;
+  --lvb-text: #ffffff;
+  --lvb-muted: rgba(255, 255, 255, 0.62);
+  --lvb-faint: rgba(255, 255, 255, 0.38);
+  --lvb-panel: rgba(12, 24, 36, 0.52);
+  --lvb-line: rgba(169, 219, 233, 0.22);
+  --lvb-error: #ffb4a8;
+  --lvb-font: "Helvetica Neue", Arial, Helvetica, sans-serif;
+
+  box-sizing: border-box;
+  width: 100%;
+  /* --lvb-height is set by the host page (data-height); 350px matches the hero slot */
+  height: var(--lvb-height, 350px);
+  color: var(--lvb-text);
+  font-family: var(--lvb-font);
+  font-size: 13px;
+  line-height: 1.35;
+  -webkit-font-smoothing: antialiased;
+  text-align: left;
+}
+.lvb *,
+.lvb *::before,
+.lvb *::after {
+  box-sizing: border-box;
+}
+/* :where() keeps these resets at zero specificity so component styles always win */
+:where(.lvb) :where(button, input, textarea) {
+  font: inherit;
+  color: inherit;
+}
+.lvb :focus-visible {
+  outline: 2px solid var(--lvb-sky);
+  outline-offset: 2px;
+}
+
+/* Panel + custom scrollbar */
+.lvb-panel {
+  position: relative;
+  height: 100%;
+  background: var(--lvb-panel);
+  border-radius: 6px 6px 6px 6px;
+  -webkit-backdrop-filter: blur(1.5px);
+  backdrop-filter: blur(1.5px);
+}
+.lvb-scroll {
+  position: relative;
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: none;
+}
+.lvb-scroll::-webkit-scrollbar {
+  display: none;
+}
+.lvb-scroll:focus {
+  outline: none;
+}
+.lvb-content {
+  padding: 14px 22px 22px 14px;
+}
+.lvb-track {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 10px;
+  pointer-events: none;
+}
+.lvb-track::before {
+  /* thin glowing rail */
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 3px;
+  width: 3px;
+  border-radius: 3px;
+  background: rgba(95, 179, 200, 0.55);
+  box-shadow: 0 0 6px rgba(95, 179, 200, 0.75);
+}
+.lvb-thumb {
+  position: absolute;
+  top: 0;
+  right: 1px;
+  width: 7px;
+  border-radius: 7px;
+  background: var(--lvb-teal-strong);
+  box-shadow:
+    0 0 8px rgba(120, 205, 225, 0.9),
+    inset 0 0 2px rgba(255, 255, 255, 0.6);
+  pointer-events: auto;
+  cursor: grab;
+  transition: opacity 0.2s;
+}
+
+/* Header */
+.lvb-cal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 2px 0 10px;
+}
+.lvb-month {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-align: center;
+  flex: 1;
+}
+.lvb-nav {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  background: none;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.lvb-nav svg {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.lvb-nav:disabled {
+  visibility: hidden;
+}
+.lvb-nav:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Grid */
+.lvb-grid {
+  display: grid;
+  gap: 4px;
+}
+.lvb-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+.lvb-row > span {
+  display: block;
+}
+.lvb-wd {
+  text-align: center;
+  font-size: 11.5px;
+  color: var(--lvb-muted);
+  padding-bottom: 4px;
+}
+.lvb-day {
+  position: relative;
+  width: 100%;
+  height: 30px;
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: default;
+  display: grid;
+  place-items: center;
+}
+.lvb-num {
+  position: relative;
+  z-index: 2;
+  font-size: 13px;
+  color: var(--lvb-muted);
+}
+.lvb-ok {
+  cursor: pointer;
+}
+.lvb-ok .lvb-num {
+  color: var(--lvb-text);
+  font-weight: 700;
+}
+.lvb-past .lvb-num {
+  color: var(--lvb-faint);
+  font-weight: 400;
+}
+.lvb-ok:hover::after {
+  content: "";
+  position: absolute;
+  inset: 3px 4px;
+  border-radius: 4px;
+  z-index: 1;
+  border: 1px solid rgba(169, 219, 233, 0.65);
+}
+.lvb-today .lvb-num {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/*
+ * Taken nights are drawn as continuous bars across days, with slanted ends on the
+ * arrival and departure days (like the cabin's original calendar artwork).
+ * ::before draws the bar; the left/right halves combine into one shape.
+ */
+.lvb-day::before {
+  /* overlap neighbours by 1px so adjacent bars join without a hairline seam */
+  content: none;
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: -0.5px;
+  right: -0.5px;
+  z-index: 0;
+}
+.lvb-bar-l::before,
+.lvb-bar-r::before {
+  content: "";
+}
+.lvb-bar-l:not(.lvb-bar-r)::before {
+  clip-path: polygon(0 0, 62% 0, 38% 100%, 0 100%);
+} /* departure day */
+.lvb-bar-r:not(.lvb-bar-l)::before {
+  clip-path: polygon(62% 0, 100% 0, 100% 100%, 38% 100%);
+} /* arrival day */
+.lvb-taken::before {
+  background: #46899d;
+}
+.lvb-pending::before {
+  background: repeating-linear-gradient(135deg, #46899d 0 4px, rgba(70, 137, 157, 0.3) 4px 8px);
+  background-attachment: fixed; /* stripes line up across neighbouring days */
+}
+/* a day that is the departure of one stay and the arrival of another */
+.lvb-bar-l.lvb-bar-r.lvb-taken.lvb-pending::before {
+  background: linear-gradient(115deg, rgba(79, 159, 180, 0.85) 50%, rgba(79, 159, 180, 0.4) 50%);
+}
+.lvb-bar-l .lvb-num,
+.lvb-bar-r .lvb-num {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 400;
+}
+.lvb-ok.lvb-bar-l .lvb-num {
+  color: var(--lvb-text);
+  font-weight: 700;
+} /* departure morning is bookable */
+.lvb-row > span:first-child .lvb-day::before {
+  border-radius: 4px 0 0 4px;
+}
+.lvb-row > span:last-child .lvb-day::before {
+  border-radius: 0 4px 4px 0;
+}
+
+/* Guest selection */
+.lvb-sel-l::after,
+.lvb-sel-r::after {
+  content: "";
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  background: rgba(169, 219, 233, 0.32);
+}
+.lvb-sel-r:not(.lvb-sel-l)::after {
+  left: 50%;
+}
+.lvb-sel-l:not(.lvb-sel-r)::after {
+  right: 50%;
+}
+.lvb-in .lvb-num,
+.lvb-out .lvb-num {
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lvb-sky);
+  color: var(--lvb-navy);
+  font-weight: 700;
+}
+.lvb-in:hover::after,
+.lvb-out:hover::after {
+  content: none;
+}
+
+/* Legend */
+.lvb-legend {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 4px 6px;
+  margin: 16px 0 0;
+  padding: 0;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.lvb-legend li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+.lvb-key {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  line-height: 1;
+}
+.lvb-key-taken {
+  background: rgba(79, 159, 180, 0.9);
+  border: 1px solid rgba(169, 219, 233, 0.8);
+}
+.lvb-key-pending {
+  background: repeating-linear-gradient(135deg, rgba(79, 159, 180, 0.95) 0 3px, rgba(255, 255, 255, 0.2) 3px 5px);
+}
+.lvb-key-free {
+  border: 1px solid rgba(255, 255, 255, 0.85);
+}
+
+.lvb-notice {
+  margin: 10px 0 0;
+  font-size: 10px;
+  letter-spacing: 0.01em;
+  color: var(--lvb-faint);
+  text-align: center;
+}
+
+/* Summary + form */
+.lvb-summary {
+  margin-top: 18px;
+}
+.lvb-prompt {
+  margin: 0;
+  padding-left: 4px;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.85);
+}
+.lvb-sub {
+  display: block;
+  font-size: 11px;
+  color: var(--lvb-muted);
+}
+.lvb-dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px 12px;
+  font-weight: 700;
+}
+.lvb-dates .lvb-sub {
+  font-weight: 400;
+}
+.lvb-dates .lvb-link {
+  grid-column: 1 / -1;
+  justify-self: start;
+}
+.lvb-link {
+  background: none;
+  border: 0;
+  padding: 0;
+  color: var(--lvb-sky);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.lvb-form {
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+.lvb-h {
+  margin: 6px 0 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+.lvb-inline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.lvb-stepper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.lvb-stepper button {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: none;
+  cursor: pointer;
+  line-height: 1;
+}
+.lvb-stepper button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+.lvb-stepper output {
+  min-width: 1ch;
+  text-align: center;
+  font-weight: 700;
+}
+.lvb-check {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  cursor: pointer;
+}
+.lvb-check input {
+  margin: 2px 0 0;
+  accent-color: var(--lvb-teal-strong);
+  width: 15px;
+  height: 15px;
+}
+
+.lvb-price {
+  margin: 4px 0 0;
+  padding: 10px 0 0;
+  border-top: 1px solid var(--lvb-line);
+  display: grid;
+  gap: 4px;
+  font-size: 12px;
+}
+.lvb-price div {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.lvb-price dt {
+  color: var(--lvb-muted);
+}
+.lvb-price dd {
+  margin: 0;
+}
+.lvb-price .lvb-total {
+  padding-top: 6px;
+  margin-top: 2px;
+  border-top: 1px solid var(--lvb-line);
+  font-size: 14px;
+  font-weight: 700;
+}
+.lvb-price .lvb-total dt {
+  color: var(--lvb-text);
+}
+
+.lvb-field {
+  display: grid;
+  gap: 4px;
+  font-size: 11.5px;
+  color: var(--lvb-muted);
+}
+.lvb-field input,
+.lvb-field textarea {
+  width: 100%;
+  padding: 8px 9px;
+  border-radius: 4px;
+  background: rgba(8, 19, 31, 0.55);
+  border: 1px solid rgba(169, 219, 233, 0.35);
+  color: var(--lvb-text);
+  font-size: 13px;
+}
+.lvb-field textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+.lvb-field input:focus,
+.lvb-field textarea:focus {
+  border-color: var(--lvb-sky);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(169, 219, 233, 0.25);
+}
+.lvb-invalid input {
+  border-color: var(--lvb-error);
+}
+.lvb-err {
+  color: var(--lvb-error);
+  font-size: 11.5px;
+}
+.lvb-hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.lvb-submit {
+  margin-top: 4px;
+  width: 100%;
+  padding: 11px 10px;
+  border: 0;
+  border-radius: 4px;
+  cursor: pointer;
+  background: var(--lvb-teal-strong);
+  color: var(--lvb-navy);
+  font-weight: 700;
+  font-size: 13.5px;
+  box-shadow: 0 0 12px rgba(95, 179, 200, 0.45);
+  transition:
+    background 0.15s,
+    transform 0.1s;
+}
+.lvb-submit:hover {
+  background: var(--lvb-sky);
+}
+.lvb-submit:active {
+  transform: translateY(1px);
+}
+.lvb-submit:disabled {
+  opacity: 0.7;
+  cursor: progress;
+}
+.lvb-fine {
+  margin: 0;
+  font-size: 11px;
+  color: var(--lvb-muted);
+}
+
+.lvb-banner {
+  margin: 0 0 10px;
+  padding: 8px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  background: rgba(255, 180, 168, 0.12);
+  border: 1px solid rgba(255, 180, 168, 0.5);
+}
+.lvb-state {
+  min-height: calc(var(--lvb-height, 350px) - 40px);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 10px;
+  text-align: center;
+  color: var(--lvb-muted);
+}
+.lvb-spinner {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid rgba(169, 219, 233, 0.25);
+  border-top-color: var(--lvb-sky);
+  animation: lvb-spin 0.8s linear infinite;
+}
+@keyframes lvb-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.lvb-done {
+  display: grid;
+  gap: 10px;
+  padding-top: 4px;
+}
+.lvb-done .lvb-month {
+  text-align: left;
+}
+.lvb-ref {
+  margin: 0;
+  color: var(--lvb-muted);
+}
+.lvb-ref strong {
+  color: var(--lvb-text);
+  letter-spacing: 0.04em;
+}
+.lvb-done .lvb-notice {
+  text-align: left;
+}
+.lvb-done .lvb-link {
+  justify-self: start;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lvb *,
+  .lvb *::before,
+  .lvb *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Minimum-stay hint under the legend */
+.lvb-minstay {
+  margin: 8px 0 0;
+  font-size: 11px;
+  color: var(--lvb-muted);
+  text-align: center;
+}
+
+/* Compact layout: hand-off to the wide popup */
+.lvb-continue {
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+
+/* ---------- Wide layout ("Book now" popup) ---------- */
+.lvb-wide {
+  height: auto;
+}
+.lvb-panel-wide {
+  height: auto;
+  border-radius: 10px;
+  background: rgba(10, 21, 33, 0.86);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.lvb-panel-wide .lvb-content {
+  padding: 22px 24px 24px;
+}
+.lvb-wide .lvb-state {
+  min-height: 320px;
+}
+.lvb-cols {
+  display: grid;
+  gap: 22px;
+}
+.lvb-cols-2 {
+  grid-template-columns: minmax(0, 1.5fr) minmax(290px, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+.lvb-cols-2 .lvb-col-form {
+  border-left: 1px solid var(--lvb-line);
+  padding-left: 28px;
+}
+.lvb-wide .lvb-summary {
+  margin-top: 0;
+}
+.lvb-wide .lvb-prompt .lvb-sub {
+  margin-top: 6px;
+}
+.lvb-wide .lvb-day {
+  height: 36px;
+}
+.lvb-wide .lvb-num {
+  font-size: 14px;
+}
+.lvb-wide .lvb-wd {
+  font-size: 12px;
+}
+.lvb-wide .lvb-month {
+  font-size: 16px;
+}
+.lvb-wide .lvb-legend {
+  justify-content: center;
+  gap: 6px 22px;
+}
+
+/* Two months side by side */
+.lvb-cal-2 .lvb-cal-head {
+  gap: 12px;
+}
+.lvb-months {
+  display: grid;
+  gap: 28px;
+}
+.lvb-cal-2 .lvb-months {
+  grid-template-columns: 1fr 1fr;
+}
+
+/* Detail fields: two per row when the form column is roomy enough */
+.lvb-fields,
+.lvb-fields-2 {
+  display: grid;
+  gap: 10px;
+}
+.lvb-cols-2 .lvb-fields-2 {
+  grid-template-columns: 1fr 1fr;
+}
+.lvb-cols-2 .lvb-fields-2 > :last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+.lvb-cols:not(.lvb-cols-2) .lvb-fields-2 {
+  grid-template-columns: 1fr 1fr;
+}
+@media (max-width: 520px) {
+  .lvb-cols:not(.lvb-cols-2) .lvb-fields-2 {
+    grid-template-columns: 1fr;
+  }
+  .lvb-panel-wide .lvb-content {
+    padding: 16px 14px 18px;
+  }
+}
