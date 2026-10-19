@@ -5,6 +5,7 @@
  * keyboard and screen-reader behaviour stay native.
  */
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState, type ReactNode } from "react";
+import styles from "./booking.module.css";
 
 export const ScrollPanel = forwardRef<HTMLDivElement | null, { children: ReactNode }>(function ScrollPanel(
   { children },
@@ -62,13 +63,13 @@ export const ScrollPanel = forwardRef<HTMLDivElement | null, { children: ReactNo
   }
 
   return (
-    <div className="lvb-panel">
-      <div className="lvb-scroll" ref={box} tabIndex={-1}>
-        <div className="lvb-content">{children}</div>
+    <div className={styles.panel}>
+      <div className={styles.scroll} ref={box} tabIndex={-1}>
+        <div className={styles.content}>{children}</div>
       </div>
-      <div className="lvb-track" ref={track} aria-hidden="true">
+      <div className={styles.track} ref={track} aria-hidden="true">
         <div
-          className="lvb-thumb"
+          className={styles.thumb}
           style={{ transform: `translateY(${thumb.top}px)`, height: thumb.height, opacity: thumb.show ? 1 : 0.35 }}
           onPointerDown={onThumbDown}
         />

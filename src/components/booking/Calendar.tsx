@@ -12,6 +12,7 @@ import {
   type Selection,
 } from "@/lib/booking/calendar";
 import { fmtLong, fmtMonth } from "./format";
+import styles from "./booking.module.css";
 
 const WEEKDAYS = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
 
@@ -28,11 +29,11 @@ interface Props {
 /** The bar drawn behind a day: which half/halves are filled, and with what. */
 function barClasses(prev: NightState | null, night: NightState | null, selPrev: boolean, selNight: boolean) {
   const out: string[] = [];
-  const kind = (s: NightState) => (s === "pending" ? "pending" : "taken");
-  if (prev) out.push(`lvb-bar-l lvb-${kind(prev)}`);
-  if (night) out.push(`lvb-bar-r lvb-${kind(night)}`);
-  if (selPrev) out.push("lvb-sel-l");
-  if (selNight) out.push("lvb-sel-r");
+  const kind = (s: NightState) => (s === "pending" ? styles.pending : styles.taken);
+  if (prev) out.push(styles.barL, kind(prev));
+  if (night) out.push(styles.barR, kind(night));
+  if (selPrev) out.push(styles.selL);
+  if (selNight) out.push(styles.selR);
   return out;
 }
 
@@ -88,11 +89,11 @@ export function Calendar({ today, rules, taken, selection, onSelect, months = 1 
   const focusTarget = shown.some((m) => focus.startsWith(m)) ? focus : `${month}-01`;
 
   return (
-    <div className={`lvb-cal${months === 2 ? " lvb-cal-2" : ""}`}>
-      <div className="lvb-cal-head">
+    <div className={months === 2 ? styles.cal2 : undefined}>
+      <div className={styles.calHead}>
         <button
           type="button"
-          className="lvb-nav"
+          className={styles.nav}
           aria-label="Previous month"
           disabled={month <= firstMonth}
           onClick={() => setMonth(shiftMonth(month, -1))}
@@ -102,13 +103,13 @@ export function Calendar({ today, rules, taken, selection, onSelect, months = 1 
           </svg>
         </button>
         {shown.map((m) => (
-          <h3 key={m} className="lvb-month" aria-live="polite">
+          <h3 key={m} className={styles.month} aria-live="polite">
             {fmtMonth(m)}
           </h3>
         ))}
         <button
           type="button"
-          className="lvb-nav"
+          className={styles.nav}
           aria-label="Next month"
           disabled={month >= lastStart}
           onClick={() => setMonth(shiftMonth(month, 1))}
@@ -119,7 +120,7 @@ export function Calendar({ today, rules, taken, selection, onSelect, months = 1 
         </button>
       </div>
 
-      <div className="lvb-months" ref={gridRef} onKeyDown={onKey}>
+      <div className={styles.months} ref={gridRef} onKeyDown={onKey}>
         {shown.map((m) => (
           <MonthGrid
             key={m}
@@ -138,19 +139,19 @@ export function Calendar({ today, rules, taken, selection, onSelect, months = 1 
         ))}
       </div>
 
-      <ul className="lvb-legend" aria-label="Legend">
+      <ul className={styles.legend} aria-label="Legend">
         <li>
-          <span className="lvb-key lvb-key-taken">1</span>Unavailable
+          <span className={`${styles.key} ${styles.keyTaken}`}>1</span>Unavailable
         </li>
         <li>
-          <span className="lvb-key lvb-key-pending" aria-hidden="true" />
+          <span className={`${styles.key} ${styles.keyPending}`} aria-hidden="true" />
           Pending
         </li>
         <li>
-          <span className="lvb-key lvb-key-free">1</span>Available
+          <span className={`${styles.key} ${styles.keyFree}`}>1</span>Available
         </li>
       </ul>
-      <p className="lvb-minstay">Minimum stay: {rules.minNights} nights</p>
+      <p className={styles.minstay}>Minimum stay: {rules.minNights} nights</p>
     </div>
   );
 }
@@ -185,21 +186,21 @@ function MonthGrid({
   const weeks = useMemo(() => monthGrid(month), [month]);
   return (
     <div
-      className="lvb-grid"
+      className={styles.grid}
       role="grid"
       aria-label={`${fmtMonth(month)}. ${picking ? "Choose your check-out date" : "Choose your check-in date"}`}
     >
-      <div className="lvb-row" role="row">
+      <div className={styles.row} role="row">
         {WEEKDAYS.map((w) => (
-          <span key={w} className="lvb-wd" role="columnheader">
+          <span key={w} className={styles.wd} role="columnheader">
             {w}
           </span>
         ))}
       </div>
       {weeks.map((week, i) => (
-        <div className="lvb-row" role="row" key={i}>
+        <div className={styles.row} role="row" key={i}>
           {week.map((date, j) => {
-            if (!date) return <span key={j} className="lvb-day lvb-empty" role="gridcell" />;
+            if (!date) return <span key={j} className={styles.day} role="gridcell" />;
             const info = dayInfo(date, taken, today);
             const prevDate = addDays(date, -1);
             const ok = !info.past && selectable(date);
@@ -213,12 +214,12 @@ function MonthGrid({
                   : "available";
             const label = `${fmtLong(date)}${info.night ? `, ${info.night === "pending" ? "pending" : "unavailable"}` : ""}${isIn ? ", check-in" : ""}${isOut ? ", check-out" : ""}`;
             const cls = [
-              "lvb-day",
-              info.past ? "lvb-past" : "",
-              ok ? "lvb-ok" : "lvb-no",
-              isIn ? "lvb-in" : "",
-              isOut ? "lvb-out" : "",
-              date === today ? "lvb-today" : "",
+              styles.day,
+              info.past && styles.past,
+              ok && styles.ok,
+              isIn && styles.in,
+              isOut && styles.out,
+              date === today && styles.today,
               ...barClasses(info.prevNight, info.night, inSel(prevDate), inSel(date)),
             ]
               .filter(Boolean)
@@ -236,7 +237,7 @@ function MonthGrid({
                   onFocus={() => setFocus(date)}
                   onClick={() => ok && onSelect(date)}
                 >
-                  <span className="lvb-num">{Number(date.slice(8))}</span>
+                  <span className={styles.num}>{Number(date.slice(8))}</span>
                 </button>
               </span>
             );

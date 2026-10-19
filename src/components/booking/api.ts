@@ -1,6 +1,7 @@
-/** Browser-side client for the booking API. */
-import type { Quote } from "@/lib/booking/rules";
+/** Booking API calls (Axios via the shared client) and the shapes they return. */
+import { http } from "@/lib/http/client";
 import type { TakenRange } from "@/lib/booking/calendar";
+import type { Quote } from "@/lib/booking/rules";
 
 export interface PublicRules {
   currency: string;
@@ -39,45 +40,31 @@ export interface BookingStatus {
   notice: string;
 }
 
-export class ApiError extends Error {
-  constructor(
-    public code: string,
-    message: string,
-  ) {
-    super(message);
-  }
+export interface BookingRequest {
+  checkIn: string;
+  checkOut: string;
+  guests: number;
+  breakfast: boolean;
+  name: string;
+  email: string;
+  phone?: string;
+  message?: string;
+  website?: string;
+  startedAt: number;
+  returnUrl: string;
 }
 
-export function createClient(apiBase: string) {
-  const base = apiBase.replace(/\/$/, "");
-  async function call<T>(path: string, init?: RequestInit): Promise<T> {
-    let res: Response;
-    try {
-      res = await fetch(base + path, { ...init, headers: { "Content-Type": "application/json", ...init?.headers } });
-    } catch {
-      throw new ApiError("network", "Can't reach the booking service. Check your connection and try again.");
-    }
-    const body = await res.json().catch(() => ({}));
-    if (!res.ok)
-      throw new ApiError(
-        body?.error?.code ?? "server_error",
-        body?.error?.message ?? "Something went wrong. Please try again.",
-      );
-    return body as T;
-  }
-  return {
-    calendar: () => call<CalendarData>("/api/calendar"),
-    request: (body: object) =>
-      call<{ reference: string; status: string; quote: Quote; checkoutUrl?: string }>("/api/bookings", {
-        method: "POST",
-        body: JSON.stringify(body),
-      }),
-    status: (ref: string, sessionId?: string) =>
-      call<BookingStatus>(
-        `/api/bookings/status?ref=${encodeURIComponent(ref)}${sessionId ? `&session_id=${encodeURIComponent(sessionId)}` : ""}`,
-      ),
-    release: (token: string) =>
-      call<{ released: boolean }>("/api/bookings/release", { method: "POST", body: JSON.stringify({ token }) }),
-  };
+export interface BookingCreated {
+  reference: string;
+  status: string;
+  quote: Quote;
+  checkoutUrl?: string;
 }
-export type BookingClient = ReturnType<typeof createClient>;
+
+export const bookingApi = {
+  calendar: () => http.get<CalendarData>("/calendar").then((r) => r.data),
+  request: (body: BookingRequest) => http.post<BookingCreated>("/bookings", body).then((r) => r.data),
+  status: (ref: string, sessionId?: string) =>
+    http.get<BookingStatus>("/bookings/status", { params: { ref, session_id: sessionId } }).then((r) => r.data),
+  release: (token: string) => http.post<{ released: boolean }>("/bookings/release", { token }).then((r) => r.data),
+};

@@ -1,10 +1,11 @@
 "use client";
-// TEMPORARY wrapper while the widget is being moved to CSS Modules + TanStack Query (next step).
-import "./booking.css";
+/** The compact calendar in the hero. Picking dates offers "Continue", which opens the booking popup with them. */
 import { useDialogs } from "@/components/site/DialogProvider";
 import { BookingWidget } from "./BookingWidget";
+import { useStripeReturn } from "./useStripeReturn";
 
 export function HeroBooking() {
   const { open } = useDialogs();
-  return <BookingWidget apiBase="" layout="compact" handleReturn onContinue={() => open("booking")} />;
+  useStripeReturn();
+  return <BookingWidget layout="compact" onContinue={() => open("booking")} />;
 }
