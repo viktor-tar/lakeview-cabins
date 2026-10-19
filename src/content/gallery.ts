@@ -1,0 +1,241 @@
+/** Gallery photos in display order. `area` / `areaTablet` place each one on the 8-column grid of the full gallery. */
+export interface Photo {
+  /** Shown in the grid */
+  src: string;
+  /** Opened in the viewer (sometimes a larger version) */
+  full: string;
+  width: number;
+  height: number;
+  alt: string;
+  area: string;
+  areaTablet?: string;
+  position?: string;
+}
+
+export const PHOTOS: Photo[] = [
+  {
+    src: "/media/kitchen2.jpg",
+    full: "/media/kitchen2.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Cabin living area with sofa, dining table and kitchen beside large lake-view windows",
+    area: "1 / 1 / 5 / 6",
+    areaTablet: "1 / 1 / 4 / 5",
+  },
+  {
+    src: "/media/bedroom1-668f0b.jpg",
+    full: "/media/bedroom1-668f0b.jpg",
+    width: 1200,
+    height: 775,
+    alt: "Bed with plaid duvet under a wooden vaulted ceiling, facing a window onto the water",
+    area: "1 / 6 / 5 / 9",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/kitchen5.jpg",
+    full: "/media/kitchen5.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Evening view of Howe Sound through the cabin's windows",
+    area: "span 1 / span 4",
+    areaTablet: "span 1 / span 8",
+  },
+  {
+    src: "/media/outside12.jpg",
+    full: "/media/outside12.jpg",
+    width: 1200,
+    height: 800,
+    alt: "The lit wooden cabin on a forested cliff above the water at dusk",
+    area: "5 / 1 / 7 / 5",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/sauna5.jpg",
+    full: "/media/sauna5.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Barrel sauna on a snowy deck surrounded by trees",
+    area: "5 / 5 / 8 / 9",
+  },
+  {
+    src: "/media/bedroom2.jpg",
+    full: "/media/bed-largeres.jpg",
+    width: 2880,
+    height: 1920,
+    alt: "Loft bedroom with a plaid-covered bed and wooden beams",
+    area: "span 6 / span 8",
+    areaTablet: "span 5 / span 8",
+  },
+  {
+    src: "/media/sauna3.jpg",
+    full: "/media/sauna3.jpg",
+    width: 1023,
+    height: 1530,
+    alt: "Wooden stairs leading up to the barrel sauna",
+    area: "14 / 1 / 18 / 5",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/sauna2.jpg",
+    full: "/media/sauna2.jpg",
+    width: 675,
+    height: 1010,
+    alt: "Cedar sauna interior with benches and a heater",
+    area: "14 / 5 / 18 / 9",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/view2.jpg",
+    full: "/media/view2.jpg",
+    width: 1600,
+    height: 2845,
+    alt: "Deck beside the sauna overlooking the sound and mountains",
+    area: "18 / 1 / 22 / 4",
+    areaTablet: "span 4 / span 4",
+    position: "35% 50%",
+  },
+  {
+    src: "/media/kitchen1.jpg",
+    full: "/media/kitchen1.jpg",
+    width: 1023,
+    height: 1530,
+    alt: "Kitchen counter beneath a wide window looking out over the water",
+    area: "span 4 / span 5",
+    areaTablet: "span 4 / span 4",
+  },
+  {
+    src: "/media/view5-min-compressed.jpg",
+    full: "/media/view5-min-compressed.jpg",
+    width: 1440,
+    height: 1920,
+    alt: "Wooden Adirondack chairs on a rocky outcrop by the cabin",
+    area: "22 / 5 / 24 / 9",
+    areaTablet: "span 2 / span 8",
+  },
+  {
+    src: "/media/view.jpg",
+    full: "/media/view.jpg",
+    width: 1280,
+    height: 1916,
+    alt: "Adirondack chair on the deck facing the mountains across the sound",
+    area: "22 / 1 / 27 / 5",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/outside14.jpg",
+    full: "/media/outside14.jpg",
+    width: 1200,
+    height: 800,
+    alt: "The cabin among snow-dusted trees above the water in winter",
+    area: "span 3 / span 4",
+  },
+  {
+    src: "/media/gondola1.jpg",
+    full: "/media/gondola1.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Gondola cabin rising above the forest and Howe Sound",
+    area: "27 / 1 / 30 / 9",
+    areaTablet: "span 3 / span 8",
+  },
+  {
+    src: "/media/kitchen6.jpg",
+    full: "/media/kitchen6.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Dining table in front of windows with a view of the sound",
+    area: "30 / 1 / 33 / 6",
+    areaTablet: "span 3 / span 5",
+  },
+  {
+    src: "/media/kitchen7.jpg",
+    full: "/media/kitchen7.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Open-plan living room, dining area and kitchen in the wooden cabin",
+    area: "30 / 6 / 33 / 9",
+    areaTablet: "span 3 / span 3",
+  },
+  {
+    src: "/media/kitchen8.jpg",
+    full: "/media/kitchen8.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Fully equipped kitchen with fridge and stove",
+    area: "span 3 / span 4",
+  },
+  {
+    src: "/media/kitchen9.jpg",
+    full: "/media/kitchen9.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Dining area with wooden chairs and a wood stove",
+    area: "span 3 / span 4",
+  },
+  {
+    src: "/media/untitled-9.jpg",
+    full: "/media/untitled-9.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Rocky shoreline and calm water below the cabin",
+    area: "span 3 / span 5",
+  },
+  {
+    src: "/media/untitled-7.jpg",
+    full: "/media/untitled-7.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Freshly caught crabs on a wooden dock",
+    area: "span 3 / span 3",
+  },
+  {
+    src: "/media/untitled-10.jpg",
+    full: "/media/untitled-10.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Sunset over the mountains reflected in the water",
+    area: "span 3 / span 4",
+  },
+  {
+    src: "/media/untitled-12.jpg",
+    full: "/media/untitled-12.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Misty morning view of the mountains across the sound",
+    area: "39 / 5 / 44 / 9",
+    areaTablet: "span 3 / span 4",
+  },
+  {
+    src: "/media/untitled-14.jpg",
+    full: "/media/untitled-14.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Angler kneeling in the water holding a salmon",
+    area: "span 2 / span 4",
+    areaTablet: "span 3 / span 3",
+  },
+  {
+    src: "/media/untitled-11.jpg",
+    full: "/media/untitled-11.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Paddleboarder on calm water with mountains behind",
+    area: "span 4 / span 5",
+    areaTablet: "span 3 / span 5",
+  },
+  {
+    src: "/media/untitled-8.jpg",
+    full: "/media/untitled-8.jpg",
+    width: 1200,
+    height: 800,
+    alt: "Snow-covered mountain peaks under a blue sky",
+    area: "44 / 6 / 48 / 9",
+    areaTablet: "span 4 / span 8",
+  },
+];
+
+/** The five photos in the mosaic at the top of the page (by index into PHOTOS). */
+export const MOSAIC = { main: 0, top: 2, left: 3, right: 4, bottom: 5 } as const;
+
+export const GALLERY_INTRO =
+  "Enjoy hiking, biking, climbing, skiing, fishing, paddling, canoeing, wildlife viewing, stargazing or just doing nothing & relax. Spot local wildlife, including deer, bears, cougar, eagles, and more in their natural habitats.";

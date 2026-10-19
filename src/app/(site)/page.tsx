@@ -4,6 +4,7 @@ import { FeatureStrip } from "@/components/home/FeatureStrip";
 import { Hero } from "@/components/home/Hero";
 import { Preloader } from "@/components/home/Preloader";
 import { Story } from "@/components/home/Story";
+import { Header } from "@/components/site/Header";
 
 export const metadata: Metadata = {
   title: { absolute: "Lakeview Cabins · Waterfront cabin on Howe Sound" },
@@ -15,6 +16,8 @@ export default function HomePage() {
   return (
     <>
       <Preloader />
+      {/* Logo, menu rail and full-screen menu: Home only, as on the original (other pages link back here). */}
+      <Header />
       <Hero />
       <FeatureStrip />
       <Story />

@@ -1,0 +1,81 @@
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 500px;
+  max-width: 100%;
+  padding: 5px 0 5px 28px;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.text {
+  flex: none;
+  color: var(--sky-300);
+  font-family: var(--font-brand);
+  font-size: 25px;
+  line-height: 30px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.link:hover .text,
+.link:focus-visible .text {
+  color: #00c8ff;
+}
+
+/* Three stacked chevrons that spread apart and shimmer on hover */
+.arrows {
+  position: relative;
+  display: flex;
+  color: #fff;
+}
+.arrow1,
+.arrow3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s;
+}
+.link:hover .arrow1 {
+  transform: translateX(10px);
+}
+.link:hover .arrow3 {
+  transform: translateX(-10px);
+}
+.link:hover .arrow1 {
+  animation: shimmer 1.4s 0.5s infinite;
+}
+.link:hover .arrow2 {
+  animation: shimmer 1.4s 0.7s infinite;
+}
+.link:hover .arrow3 {
+  animation: shimmer 1.4s 0.9s infinite;
+}
+@keyframes shimmer {
+  0%,
+  100% {
+    color: #fff;
+  }
+  30% {
+    color: #2e97ff;
+  }
+  60% {
+    color: #2e97ff80;
+  }
+}
+
+@media (max-width: 991px) {
+  .text {
+    font-size: 22px;
+  }
+}
+@media (max-width: 479px) {
+  .link {
+    padding: 1px 0 1px 28px;
+  }
+  .text {
+    font-size: 16px;
+  }
+}
