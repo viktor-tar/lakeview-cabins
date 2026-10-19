@@ -3,6 +3,9 @@ import { expect, test, type Locator } from "@playwright/test";
 /** Clicks the first bookable day, then a bookable day at least `nights` later (moving to next month if needed). */
 async function pickStay(cal: Locator, nights = 3) {
   const free = cal.locator("button[data-date]:not([aria-disabled])");
+  // Find the first month with a bookable day.
+  for (let m = 0; m < 6 && (await free.count()) === 0; m++)
+    await cal.getByRole("button", { name: "Next month" }).click();
   const checkIn = (await free.first().getAttribute("data-date"))!;
   await free.first().click();
   for (let attempt = 0; attempt < 3; attempt++) {
