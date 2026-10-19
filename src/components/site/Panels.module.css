@@ -73,6 +73,10 @@
 .text strong {
   font-weight: 600;
 }
+.subhead {
+  display: block;
+  margin-bottom: 20px;
+}
 .dashList {
   margin: 0 0 20px;
   padding: 0;

@@ -107,6 +107,10 @@
 .map {
   background: #0b2e4b99;
 }
+/* The map card shrink-wraps around the map (70% of the viewport) */
+.map .card {
+  flex: none;
+}
 .map .content {
   display: flex;
   justify-content: center;

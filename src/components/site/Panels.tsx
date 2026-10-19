@@ -68,8 +68,7 @@ export function LandmarksPanel() {
           <p>{LANDMARKS.intro}</p>
           {LANDMARKS.activities.map((a) => (
             <p key={a.title}>
-              <strong>{a.title}</strong>
-              <br />
+              <strong className={styles.subhead}>{a.title}</strong>
               {a.text}
             </p>
           ))}

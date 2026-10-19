@@ -136,7 +136,8 @@
   font-size: 1.5rem;
   line-height: 20px;
   text-align: left;
-  text-decoration: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
   cursor: pointer;
   transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
@@ -146,8 +147,7 @@
   opacity: 0.5;
 }
 .linkActive {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  color: var(--sky-200);
 }
 .contacts {
   flex: 1;
@@ -270,20 +270,29 @@
   .brandWrap {
     display: none;
   }
+  /* Stacked: links on top (scrollable if needed), the photo underneath */
   .inner {
-    flex-flow: column-reverse wrap;
+    flex-direction: column-reverse;
   }
   .left,
   .right {
     width: 100%;
   }
   .left {
+    flex: none;
+    max-height: 45vh;
     aspect-ratio: 1;
   }
   .right {
+    flex: 1;
+    min-height: 0;
     padding: 3.5rem 3rem 1.5rem 1.5rem;
+    overflow-y: auto;
   }
   .link {
     padding: 0.25em 0;
+  }
+  .contacts {
+    margin-left: 0;
   }
 }
