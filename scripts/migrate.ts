@@ -1,5 +1,5 @@
 /**
- * Minimal migration runner: applies every drizzle/*.sql file once, in name order,
+ * Minimal migration runner: applies every migrations/*.sql file once, in name order,
  * inside a transaction, and records it in _migrations.
  * Usage: DATABASE_URL=... npx tsx scripts/migrate.ts
  */
@@ -11,7 +11,7 @@ export async function migrate(databaseUrl: string, log = console.log) {
   const sql = postgres(databaseUrl, { max: 1, prepare: false, onnotice: () => {} });
   try {
     await sql`CREATE TABLE IF NOT EXISTS _migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`;
-    const dir = join(process.cwd(), "drizzle");
+    const dir = join(process.cwd(), "migrations");
     const files = readdirSync(dir)
       .filter((f) => f.endsWith(".sql"))
       .sort();

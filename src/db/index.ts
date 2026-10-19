@@ -1,7 +1,7 @@
 /**
  * Database connection (postgres.js). One shared client per server instance.
  * Note: the booking service uses SQL directly so the critical logic (overlap constraint,
- * row locks, transactions) is explicit. src/db/schema.ts mirrors the tables for Drizzle Kit.
+ * row locks, transactions) is explicit.
  */
 import postgres, { type Sql } from "postgres";
 
