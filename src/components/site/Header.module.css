@@ -1,0 +1,289 @@
+/* Logo (top left, scrolls away with the page) */
+.brandWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 800;
+  padding: 1rem 0 1rem 1.5rem;
+}
+.brand {
+  display: block;
+  width: 100px;
+  height: 100px;
+}
+.brand img {
+  width: 100%;
+  height: 100%;
+}
+
+/* The rail: a fixed strip on the right edge with the menu icon at the top and "Scroll down" below. */
+.rail {
+  position: fixed;
+  inset: 0 0 0 auto;
+  z-index: 999;
+  display: block;
+  width: var(--rail);
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--beige-100);
+  cursor: pointer;
+}
+.railInner {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  padding: 3rem 0 8.7rem;
+}
+.icon {
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 2rem;
+  height: 0.75rem;
+}
+.icon span {
+  width: 100%;
+  height: 1px;
+  background: var(--taupe);
+}
+.railText {
+  color: var(--taupe);
+  font-size: 14px;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transform: rotate(90deg);
+}
+.railLine {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 1px;
+  background: var(--taupe);
+}
+
+/* Full-screen menu */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: 800;
+  display: none;
+  overflow: hidden;
+}
+.menu[data-phase="open"],
+.menu[data-phase="closing"] {
+  display: flex;
+}
+.inner {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+}
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--navy-950);
+}
+.left {
+  position: relative;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 65%;
+  overflow: hidden;
+}
+.photo {
+  object-fit: cover;
+}
+.leftCover {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  background: var(--navy-950);
+}
+.right {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 35%;
+  padding: 3.5rem 4.5rem 3.5rem 3.5rem;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.link {
+  display: flex;
+  align-items: center;
+  padding: 5px 0 10px;
+  border: 0;
+  background: none;
+  color: var(--beige-100);
+  font-family: var(--font-brand);
+  font-size: 1.5rem;
+  line-height: 20px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+/* Hovering one link dims the others, as on the original. */
+.links:hover .link:not(:hover),
+.links:focus-within .link:not(:focus-visible):not(:hover) {
+  opacity: 0.5;
+}
+.linkActive {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.contacts {
+  flex: 1;
+  margin: 48px 0 0 -26px;
+}
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+  color: var(--sky-200);
+  font-size: 15px;
+  text-decoration: none;
+}
+.contact:hover {
+  color: #fff;
+}
+.contact img {
+  filter: brightness(200%);
+}
+.map {
+  height: 200px;
+  margin-bottom: 16px;
+  overflow: hidden;
+}
+
+/* A menu item's details, shown over the photo in the left column */
+.side {
+  position: absolute;
+  inset: 0;
+  z-index: 25;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  padding: 2rem 6rem;
+  background: #29282866;
+  animation: fadeIn 0.75s ease;
+}
+.sideNarrow {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+.sideCard {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  height: 100%;
+  padding: 2rem 0;
+  overflow: clip;
+  border-radius: 12px;
+  background: #fff;
+  font-family: var(--font-serif);
+}
+.sideNarrow .sideCard {
+  background: #ffffffbf;
+}
+.sideClose {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.sideClose span {
+  position: absolute;
+  width: 1.2rem;
+  height: 3px;
+  border-radius: 1px;
+  background: #000;
+  transform: rotate(-45deg);
+}
+.sideClose span + span {
+  transform: rotate(45deg);
+}
+.sideContent {
+  flex: 1;
+  margin: 1rem 0;
+  padding: 0 1rem 0 2rem;
+  overflow: auto;
+}
+.sideNarrow .sideContent {
+  flex: 0 auto;
+  width: 500px;
+  padding: 0 3rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (max-width: 991px) {
+  .icon {
+    width: 1.5rem;
+  }
+  .railText,
+  .railLine {
+    display: none;
+  }
+  .left {
+    width: 60%;
+  }
+  .right {
+    width: 45%;
+  }
+}
+
+@media (max-width: 767px) {
+  .brandWrap {
+    display: none;
+  }
+  .inner {
+    flex-flow: column-reverse wrap;
+  }
+  .left,
+  .right {
+    width: 100%;
+  }
+  .left {
+    aspect-ratio: 1;
+  }
+  .right {
+    padding: 3.5rem 3rem 1.5rem 1.5rem;
+  }
+  .link {
+    padding: 0.25em 0;
+  }
+}

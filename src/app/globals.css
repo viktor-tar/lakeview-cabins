@@ -1,0 +1,118 @@
+/* Site-wide base: design tokens, a light reset and the few element defaults the design relies on.
+   Everything else lives in CSS Modules next to its component. */
+:root {
+  --navy-950: #08131f;
+  --navy-900: #0b1a2a;
+  --navy-700: #1d426b;
+  --navy-600: #1c4169;
+  --sky-200: #a9dbe9;
+  --sky-300: #99c0d9;
+  --cream-200: #fffbcc;
+  --beige-100: #f0eeea;
+  --link-blue: #0a66c2;
+  --taupe: #b1a89d;
+
+  --font-brand: "Port Lligat Sans", sans-serif;
+  --font-body: Lato, sans-serif;
+  --font-popup: Poppins, sans-serif;
+  --font-serif: "PT Serif", serif;
+  --font-ui: Arial, sans-serif;
+
+  --gutter: 5.5rem;
+  --content-max: 90rem;
+  --rail: 4.5rem; /* width of the fixed menu rail on the right */
+}
+
+@media (max-width: 991px) {
+  :root {
+    --gutter: 2rem;
+    --rail: 2rem;
+  }
+}
+@media (max-width: 767px) {
+  :root {
+    --gutter: 1rem;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--navy-950);
+  color: #333;
+  font-family: var(--font-ui);
+  font-size: 14px;
+  line-height: 20px;
+}
+
+img,
+video {
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+button {
+  font: inherit;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sky-200);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Custom scrollbars, as on the original site */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #5789b6;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #418ea3;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

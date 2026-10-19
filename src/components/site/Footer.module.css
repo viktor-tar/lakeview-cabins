@@ -1,0 +1,391 @@
+.footer {
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+  background:
+    linear-gradient(#08131f 16%, #07121e00 92%),
+    url("/media/outside12.jpg") 50% 0 / cover no-repeat;
+  color: #333;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 1140px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+/* Newsletter bar */
+.newsletter {
+  display: flex;
+  align-self: stretch;
+  margin: 0 10px;
+  padding: 10px;
+  border: 1px dotted #110d05;
+  background: #006d9f33;
+}
+/* The logo shrinks with the space left beside the text and form (it ends up ~52px wide at 1440px). */
+.logoWrap {
+  max-height: 106px;
+  margin-right: 20px;
+}
+.logo {
+  display: block;
+  width: 100px;
+  max-width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+.cta {
+  display: flex;
+  align-items: center;
+  width: 50%;
+  margin: 0 30px 0 0;
+  color: #faf7d3;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+}
+.formWrap {
+  display: flex;
+  align-items: center;
+}
+.form {
+  position: relative;
+  width: 100%;
+}
+.formRow {
+  display: flex;
+}
+.input {
+  flex: 1;
+  width: auto;
+  height: 48px;
+  margin-right: 30px;
+  padding: 10px 115px 13px 24px;
+  border: 1px solid #fff;
+  border-radius: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 17px;
+  line-height: 30px;
+  transition: border-color 0.2s;
+}
+.input::placeholder {
+  color: #c2c2c261;
+}
+.input:focus {
+  border-color: var(--sky-200);
+  outline: none;
+}
+.input[aria-invalid="true"] {
+  border-color: #ff9b9b;
+}
+.submit {
+  flex: none;
+  padding: 13px 37px;
+  border: 1px solid #fff;
+  border-radius: 0;
+  background: transparent;
+  color: var(--cream-200);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 22px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition:
+    background-color 0.2s,
+    color 0.2s;
+}
+.submit:hover {
+  background: #f9f5cf29;
+  color: #fff;
+}
+.submit:disabled {
+  opacity: 0.6;
+  cursor: progress;
+}
+.formError {
+  width: 100%;
+  margin: 8px 0 0;
+  color: #ffb4b4;
+  font-size: 14px;
+}
+.formDone {
+  margin: 0;
+  color: var(--cream-200);
+  font-size: 16px;
+}
+.hp {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+/* Columns */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-self: stretch;
+  margin: 0 10px;
+  padding: 0 10px;
+}
+.head {
+  margin: 20px 0 10px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 44px;
+}
+.desc {
+  margin: 0;
+  color: var(--sky-200);
+  line-height: 21px;
+}
+.contactCol {
+  margin-right: 35px;
+}
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin: 20px 0;
+  color: var(--sky-200);
+  font-size: 15px;
+  text-decoration: none;
+}
+.contact:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.contact img {
+  filter: brightness(200%);
+}
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.link {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sky-200);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 30px;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+}
+.link:hover {
+  color: #fff;
+}
+.social {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-top: 74px;
+}
+.socialIcon {
+  width: 40px;
+  height: auto;
+  filter: brightness(35%) invert();
+}
+
+/* Bottom bar */
+.rule {
+  width: 100vw;
+  margin: 108px 0 50px;
+  border: 0;
+  border-top: 1px solid var(--cream-200);
+}
+.bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  width: 100%;
+  margin-top: -18px;
+  padding-bottom: 20px;
+}
+.copy {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+}
+.legal {
+  display: flex;
+  align-items: center;
+}
+.legalLink {
+  margin-right: 20px;
+  color: #fff;
+  font-size: 16px;
+  text-decoration: none;
+}
+.legalLink:hover {
+  text-decoration: underline;
+}
+.dot {
+  width: 5px;
+  height: 5px;
+  margin-right: 20px;
+  border-radius: 50%;
+  background: var(--cream-200);
+}
+
+@media (min-width: 1440px) {
+  .footer {
+    background-position:
+      0 0,
+      50% 20%;
+  }
+}
+@media (min-width: 1920px) {
+  .link,
+  .desc,
+  .contact,
+  .cta {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+  .footer {
+    border-top: 1px solid #d9d5b3;
+    background-position:
+      0 0,
+      50%;
+  }
+  .container {
+    width: 660px;
+  }
+  .newsletter {
+    flex-direction: column;
+    align-items: center;
+  }
+  .logoWrap {
+    display: none;
+  }
+  .cta {
+    width: 100%;
+    margin: 0 0 20px;
+  }
+  .formWrap {
+    width: 100%;
+  }
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .social {
+    display: none;
+  }
+  .rule {
+    margin-top: 0;
+  }
+  .dot {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 0 100px;
+  }
+  .grid {
+    gap: 12px;
+  }
+  .link {
+    margin-bottom: 5px;
+    line-height: 20px;
+  }
+  .formRow {
+    flex-direction: column;
+  }
+  .input {
+    margin: 0 0 20px;
+  }
+  .submit {
+    font-size: 16px;
+  }
+  .rule {
+    margin: 10px 0 50px;
+  }
+  .bottom {
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .copy {
+    margin-right: 25px;
+    font-size: 14px;
+  }
+  .cta {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 479px) {
+  .container {
+    padding: 0 10px;
+  }
+  .newsletter {
+    padding: 10px 0 31px;
+  }
+  .cta {
+    width: 70%;
+    line-height: 20px;
+  }
+  .formWrap {
+    flex-direction: column;
+    width: 70%;
+  }
+  .input {
+    padding: 10px;
+  }
+  .input::placeholder,
+  .desc {
+    text-align: center;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+    text-align: center;
+  }
+  .contactCol {
+    margin-right: 0;
+  }
+  .head {
+    margin-top: 10px;
+  }
+  .links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .link {
+    color: #fff;
+    font-size: 14px;
+    text-align: center;
+  }
+  .rule {
+    margin-bottom: 10px;
+  }
+  .bottom {
+    margin-top: 7px;
+  }
+  .copy {
+    width: 200px;
+    font-size: 14px;
+  }
+  .legalLink {
+    font-size: 14px;
+  }
+}

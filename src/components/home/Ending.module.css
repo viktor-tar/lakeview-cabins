@@ -1,0 +1,231 @@
+/* Pulled up over the empty end of the road section, as on the original. */
+.ending {
+  position: relative;
+  z-index: 2;
+  margin-top: -945px;
+}
+.inner {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.fade {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  background-image: linear-gradient(#fff0, var(--navy-950) 33%);
+}
+.links {
+  position: absolute;
+  inset: auto 0 0;
+  height: 200px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.linkItem {
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+}
+.link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  width: 500px;
+  max-width: 100%;
+  padding: 5px 0 5px 28px;
+  border: 0;
+  background: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.linkText {
+  flex: none;
+  color: var(--sky-300);
+  font-family: var(--font-brand);
+  font-size: 25px;
+  line-height: 30px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.link:hover .linkText,
+.link:focus-visible .linkText {
+  color: #00c8ff;
+}
+
+/* Three stacked chevrons that spread apart and shimmer on hover */
+.arrows {
+  position: relative;
+  display: flex;
+  color: #fff;
+}
+.arrow1,
+.arrow3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transition: transform 0.5s;
+}
+.link:hover .arrow1 {
+  transform: translateX(10px);
+}
+.link:hover .arrow3 {
+  transform: translateX(-10px);
+}
+.link:hover .arrow1 {
+  animation: shimmer 1.4s 0.5s infinite;
+}
+.link:hover .arrow2 {
+  animation: shimmer 1.4s 0.7s infinite;
+}
+.link:hover .arrow3 {
+  animation: shimmer 1.4s 0.9s infinite;
+}
+@keyframes shimmer {
+  0%,
+  100% {
+    color: #fff;
+  }
+  30% {
+    color: #2e97ff;
+  }
+  60% {
+    color: #2e97ff80;
+  }
+}
+
+/* The illustrated cabin */
+.scene {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1100px;
+  height: 700px;
+  margin-top: -56px;
+  background: var(--navy-950);
+}
+.video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.2s;
+}
+.video[data-hidden="true"] {
+  opacity: 0;
+}
+.shade {
+  position: absolute;
+  inset: -1% 0 0;
+  background-image: linear-gradient(var(--navy-950) 3%, #08131f9e 20%, #fff0 58%, #bec1c400 80%, var(--navy-950));
+}
+.bookWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+}
+.book {
+  position: absolute;
+  bottom: -120px;
+  z-index: 4;
+  width: 200px;
+  padding: 16px 30px 15px;
+  border: 0;
+  border-radius: 4px;
+  background: var(--cream-200);
+  box-shadow:
+    0 0 7px -1px #ffe100,
+    0 0 20px -1px #ffbf00b5,
+    inset 0 0 20px 5px #fffbcc69,
+    0 0 50px -2px #c78112;
+  color: #000000ad;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 16px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition:
+    translate 0.32s,
+    box-shadow 0.32s;
+}
+.book:hover {
+  translate: 0 -2px;
+  box-shadow: inset 0 0 20px 6px #f9efc075;
+}
+.book:active {
+  translate: 0;
+  box-shadow: 0 7px 15px -5px #0000003d;
+}
+
+@media (min-width: 1440px) {
+  .scene {
+    max-width: 1300px;
+  }
+}
+@media (min-width: 1920px) {
+  .ending {
+    margin-top: -1024px;
+  }
+  .scene {
+    max-width: 1270px;
+  }
+}
+
+@media (max-width: 991px) {
+  .ending {
+    margin-top: -975px;
+  }
+  .inner {
+    padding: 20px 30px 0;
+  }
+  .scene {
+    max-width: none;
+  }
+  .linkText {
+    font-size: 22px;
+  }
+  .book {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .ending {
+    margin-top: -643px;
+  }
+  .inner {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .book {
+    padding: 10px 20px;
+  }
+}
+
+@media (max-width: 479px) {
+  .ending {
+    margin-top: -941px;
+  }
+  .scene {
+    height: 400px;
+    margin-top: -85px;
+  }
+  .linkItem {
+    margin-top: 1px;
+  }
+  .link {
+    padding: 1px 0 1px 28px;
+  }
+  .linkText {
+    font-size: 16px;
+  }
+}

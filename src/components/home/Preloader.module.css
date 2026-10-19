@@ -1,0 +1,50 @@
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: #09121f;
+  transition: opacity 0.5s ease-out;
+  /* Safety net: if scripts never run, the intro still gets out of the way after 8 s. */
+  animation: autoHide 0.5s 8s forwards;
+}
+@keyframes autoHide {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+.preloader[data-fading="true"] {
+  opacity: 0;
+  pointer-events: none;
+}
+.video {
+  width: auto;
+  max-width: none;
+  height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .video {
+    height: 300px;
+  }
+}
+@media (max-width: 767px) {
+  .preloader {
+    align-items: flex-start;
+  }
+}
+@media (max-width: 479px) {
+  .video {
+    height: 200px;
+  }
+}

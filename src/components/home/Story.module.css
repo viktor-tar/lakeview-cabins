@@ -1,0 +1,466 @@
+.outer {
+  position: relative;
+  z-index: 0;
+  overflow-x: clip;
+}
+
+.story {
+  position: relative;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background:
+    linear-gradient(#ffffffb8 52%, var(--navy-950) 61%),
+    var(--skyline) 50% 0 / cover no-repeat;
+}
+
+.wrap {
+  position: relative;
+  width: 100%;
+}
+
+/* Fades the top of the road into the strip above */
+.roadFade {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 9;
+  height: 200px;
+  background-image: linear-gradient(var(--navy-700) 23%, #fff0);
+  pointer-events: none;
+}
+
+/* Intro block: heading, clip, text + map button on the left; tall photo on the right */
+.intro {
+  position: relative;
+  z-index: 6;
+  padding: 2rem 0;
+  background-image: linear-gradient(var(--navy-600), #fff0);
+}
+.introGrid {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: 1.25rem;
+  align-content: start;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 4rem var(--gutter) 0;
+}
+.heading {
+  grid-area: 1 / 1 / 2 / 9;
+  margin: 0 0 10px;
+  color: #c3c3c3;
+  font-family: var(--font-brand);
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 1em;
+  letter-spacing: -0.03em;
+}
+.introClip {
+  grid-area: 2 / 1 / 3 / 9;
+  max-width: 62ch;
+}
+.introText {
+  grid-area: 3 / 1 / 4 / 7;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 40ch;
+  font-family: var(--font-brand);
+}
+.introImage {
+  grid-area: 1 / 9 / 4 / 13;
+}
+.introPhoto {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Body copy: dark text with a faint outline so it stays readable over the backdrop */
+.copy {
+  margin: 0 0 10px;
+  color: #333;
+  font-family: var(--font-brand);
+  font-size: 1.3rem;
+  line-height: 1.3em;
+  -webkit-text-stroke-width: 0.5px;
+}
+.copyIntro {
+  margin-top: 26px;
+}
+.copyNarrow {
+  max-width: 28ch;
+}
+.copyPulled {
+  margin: -50px 0 47px;
+}
+.copyNight {
+  max-width: 28ch;
+  color: var(--sky-300);
+}
+.copyStars {
+  margin: 26px 0;
+  color: #99c0d9e8;
+}
+.below {
+  margin-top: 100px;
+}
+
+/* "Check on the map": outlined text; a solid copy sweeps across on hover */
+.mapButton {
+  position: relative;
+  align-self: flex-start;
+  margin-right: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+.mapOutline,
+.mapFill {
+  display: block;
+  padding: 2px 0;
+  font-family: var(--font-brand);
+  font-size: 20px;
+  line-height: 28px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  -webkit-text-stroke: 1px var(--link-blue);
+}
+.mapOutline {
+  color: transparent;
+}
+.mapFill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0;
+  overflow: hidden;
+  border-right: 4px solid var(--link-blue);
+  color: var(--link-blue);
+  transition: width 0.5s ease;
+}
+.mapButton:hover .mapFill,
+.mapButton:focus-visible .mapFill {
+  width: 100%;
+}
+
+/* Photo rows */
+.row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8em;
+  width: 100%;
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding: 4rem var(--gutter) 0;
+}
+.big {
+  width: 50%;
+}
+.small {
+  flex: 1;
+}
+.smallTop {
+  margin-left: auto;
+}
+.pair {
+  gap: 0;
+}
+.third {
+  flex: 0 auto;
+  width: 30%;
+}
+.nightRow {
+  align-items: flex-start;
+}
+.portrait {
+  position: relative;
+  width: 100%;
+  padding-top: 150%;
+}
+.cover {
+  object-fit: cover;
+}
+.clip {
+  display: block;
+  height: auto;
+  margin-bottom: 6px;
+}
+.clipBright {
+  margin-bottom: -34px;
+  filter: brightness(124%);
+}
+.clipWide {
+  display: block;
+  width: 300px;
+  height: auto;
+  margin-bottom: -49px;
+}
+.camp {
+  display: block;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.finaleRow {
+  display: block;
+}
+.finale {
+  position: relative;
+  width: 100%;
+  padding-top: 70%;
+}
+
+/* The road: pinned to the viewport down the middle of the section */
+.roadPin {
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  z-index: 8;
+  width: 450px;
+  height: 100vh;
+  margin: 0 auto;
+  pointer-events: none;
+}
+.roadFrame {
+  position: absolute;
+  inset: 0;
+}
+
+.mobileBackdrop {
+  display: none;
+}
+
+@media (min-width: 1280px) {
+  .roadPin {
+    width: 550px;
+  }
+}
+@media (min-width: 1440px) {
+  .roadPin {
+    width: 600px;
+  }
+}
+@media (min-width: 1920px) {
+  .roadPin {
+    width: 800px;
+  }
+  .copy {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 991px) {
+  .story {
+    background:
+      linear-gradient(#ffffffa6 47%, var(--navy-950) 60%),
+      var(--skyline) 50% 0 / cover no-repeat;
+  }
+  .intro {
+    padding-top: 0;
+  }
+  /* Two wrapped rows: heading + clip, then text + photo (photo centred against the text) */
+  .introGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0 2rem;
+  }
+  .heading {
+    flex: 0 auto;
+    margin-bottom: 0;
+  }
+  .introClip {
+    display: flex;
+    flex: 0 auto;
+    align-items: center;
+  }
+  .clipWide {
+    margin-bottom: 0;
+  }
+  .introText {
+    flex: 0 auto;
+    max-width: 30ch;
+  }
+  .introImage {
+    display: flex;
+    flex: 0 auto;
+    align-items: center;
+  }
+  .introPhoto {
+    width: 300px;
+    height: 300px;
+  }
+  .copyIntro {
+    margin-top: 10px;
+  }
+  .row {
+    gap: 5em;
+    padding: 4rem 2rem 0;
+  }
+  .rowA {
+    padding-top: 0;
+  }
+  .rowB {
+    padding-top: 2rem;
+  }
+  .small {
+    order: 1;
+  }
+  .portrait {
+    padding-top: 158%;
+  }
+  .copyNarrow {
+    max-width: 20ch;
+  }
+  .third {
+    width: 40%;
+  }
+  .below {
+    margin-top: 40px;
+  }
+  .rowB .below {
+    margin-top: 151px;
+  }
+  .copyNight,
+  .copyStars {
+    font-size: 1.2rem;
+  }
+  .roadPin {
+    transform: scaleX(0.9);
+  }
+}
+
+/* Phones: content runs down the left half, the road down the right */
+@media (max-width: 767px) {
+  .story {
+    background: linear-gradient(#ffffffb8 52%, var(--navy-950) 64%);
+  }
+  .introGrid {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: flex-start;
+    width: 50%;
+    margin: 0;
+    padding: 68px 0 0 1rem;
+  }
+  .heading {
+    font-size: 2rem;
+  }
+  .introText {
+    flex: none;
+    max-width: none;
+    margin-bottom: 10px;
+  }
+  .introImage {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+  .introClip {
+    align-self: stretch;
+    justify-content: center;
+  }
+  .clipWide {
+    flex: none;
+    width: 200px;
+    margin-bottom: 0;
+  }
+  .row {
+    display: block;
+    padding: 0 2rem;
+  }
+  .big,
+  .small,
+  .third {
+    width: 50%;
+  }
+  .portrait {
+    margin-top: 20px;
+    padding-top: 100%;
+  }
+  .copy {
+    font-size: 1rem;
+  }
+  .copyNarrow,
+  .copyNight {
+    max-width: none;
+  }
+  .copyPulled {
+    margin: 20px 0 0;
+  }
+  .clip {
+    width: 200px;
+  }
+  .clipBright {
+    margin-bottom: 0;
+  }
+  .below,
+  .rowB .below {
+    margin-top: 20px;
+  }
+  .rowB {
+    padding-top: 0;
+  }
+  .finaleRow {
+    padding-right: 1rem;
+  }
+  .roadPin {
+    width: 100%;
+    margin: 0;
+    transform: none;
+    overflow: hidden;
+  }
+  .roadFrame {
+    inset: -83px auto auto 285px;
+    width: 420px;
+    height: 100vh;
+  }
+  .mobileBackdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: block;
+  }
+  .portraitSky {
+    display: none;
+  }
+}
+
+@media (max-width: 479px) {
+  .row {
+    padding: 0 1rem;
+  }
+  .story {
+    background: linear-gradient(#ffffffa6 55%, var(--navy-950) 64%);
+  }
+  .introGrid {
+    gap: 2rem;
+  }
+  .portrait {
+    padding-top: 160%;
+  }
+  .finale {
+    padding-top: 156%;
+  }
+  .roadPin {
+    transform: scaleX(0.9);
+  }
+  .roadFrame {
+    inset: 0 auto auto 66px;
+    width: 400px;
+  }
+  .portraitSky {
+    display: block;
+  }
+  .landscapeSky {
+    display: none;
+  }
+}

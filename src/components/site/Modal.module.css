@@ -1,0 +1,178 @@
+/* Ported from the original popups: a full-height dark overlay with a rounded card,
+   a large X button in the top-right corner, and scrolling content inside the card. */
+.lock {
+  overflow: hidden;
+}
+
+.dialog {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0 6rem;
+  border: 0;
+  background: var(--navy-950);
+  color: #000;
+  font-family: var(--font-serif);
+  opacity: 0;
+  transition:
+    opacity 0.4s ease,
+    display 0.4s allow-discrete,
+    overlay 0.4s allow-discrete;
+}
+.dialog[open] {
+  opacity: 1;
+}
+@starting-style {
+  .dialog[open] {
+    opacity: 0;
+  }
+}
+.dialog::backdrop {
+  background: transparent;
+}
+
+.frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem 0;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  padding: 2rem 0;
+  overflow: clip;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  cursor: pointer;
+}
+.close span {
+  position: absolute;
+  width: 1.2rem;
+  height: 3px;
+  border-radius: 1px;
+  background: #000;
+  transform: rotate(-45deg);
+}
+.close span + span {
+  transform: rotate(45deg);
+}
+
+.content {
+  flex: 1;
+  height: 90%;
+  margin: 1rem 0;
+  padding: 0 1rem 0 2rem;
+  overflow: auto;
+}
+
+/* Amenities: a narrower, slightly see-through card on the dark overlay. */
+.narrow .card {
+  flex: none;
+  background: #ffffffde;
+}
+.narrow .content {
+  flex: 0 auto;
+  width: 500px;
+  padding: 0 3rem;
+}
+
+/* Map: a translucent blue overlay so the page shows through, with the map centred. */
+.map {
+  background: #0b2e4b99;
+}
+.map .content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+/* Booking: the hero photo behind the calendar, with a white close button. */
+.booking .card {
+  background: var(--navy-950) url("/media/adjust-canada4-compressed-fixedtree2.jpg") center / cover no-repeat;
+}
+.booking .close span {
+  background: #fff;
+}
+
+@media (max-width: 991px) {
+  .narrow .content {
+    width: 350px;
+  }
+}
+
+@media (max-width: 767px) {
+  .narrow .content {
+    width: auto;
+    padding: 2rem;
+  }
+  .frame {
+    padding-bottom: 0;
+  }
+  .content {
+    margin-bottom: 0;
+    padding: 0 2rem;
+  }
+  .map .content {
+    padding: 2rem;
+  }
+  .booking .card {
+    padding: 0;
+  }
+}
+
+@media (max-width: 479px) {
+  .dialog {
+    padding: 0;
+  }
+  .booking {
+    padding: 0 5%;
+  }
+  .frame {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  .card {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+  .narrow .card {
+    flex: 0 auto;
+  }
+  .close {
+    width: 3rem;
+    height: 3rem;
+  }
+  .content,
+  .narrow .content,
+  .map .content {
+    padding: 1.5rem;
+  }
+}
