@@ -189,6 +189,7 @@
 }
 .clip {
   display: block;
+  width: 100%;
   height: auto;
   margin-bottom: 6px;
 }
@@ -275,6 +276,7 @@
   }
   .heading {
     flex: 0 auto;
+    align-self: center;
     margin-bottom: 0;
   }
   .introClip {
@@ -283,7 +285,7 @@
     align-items: center;
   }
   .clipWide {
-    margin-bottom: 0;
+    margin-bottom: 6px;
   }
   .introText {
     flex: 0 auto;
@@ -371,7 +373,8 @@
   .clipWide {
     flex: none;
     width: 200px;
-    margin-bottom: 0;
+    max-width: none;
+    margin-bottom: 6px;
   }
   .row {
     display: block;

@@ -46,7 +46,7 @@ export function Story() {
                 ))}
               </h2>
               <div className={styles.introClip}>
-                <LoopClip src={CLIPS.road} className={styles.clipWide} />
+                <LoopClip {...CLIPS.road} className={styles.clipWide} />
               </div>
               <div className={styles.introText}>
                 <p className={`${styles.copy} ${styles.copyIntro}`}>{STORY.intro}</p>
@@ -78,7 +78,7 @@ export function Story() {
             </div>
             <div className={styles.small}>
               <div className={styles.smallTop}>
-                <LoopClip src={CLIPS[first.clip]} className={`${styles.clip} ${styles.clipBright}`} />
+                <LoopClip {...CLIPS[first.clip]} className={`${styles.clip} ${styles.clipBright}`} />
                 <p className={`${styles.copy} ${styles.copyIntro}`}>{first.smallText}</p>
               </div>
               <Portrait img={first.small} sizes={SMALL} />
@@ -92,7 +92,7 @@ export function Story() {
             </div>
             <div className={styles.small}>
               <div className={styles.smallTop}>
-                <LoopClip src={CLIPS[second.clip]} className={styles.clip} />
+                <LoopClip {...CLIPS[second.clip]} className={styles.clip} />
                 <p className={`${styles.copy} ${styles.copyPulled}`}>{second.smallText}</p>
               </div>
               <Portrait img={second.small} sizes={SMALL} />

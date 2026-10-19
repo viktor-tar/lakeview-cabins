@@ -1,7 +1,18 @@
-/** A short muted video that loops like an animated image. Hidden from screen readers (decorative). */
-export function LoopClip({ src, className }: { src: string; className?: string }) {
+/** A short muted looping clip with a transparent background, used like an animated image. Decorative. */
+export function LoopClip({
+  src,
+  width,
+  height,
+  className,
+}: {
+  src: string;
+  /** Intrinsic size, so the page doesn't shift when the clip loads. */
+  width: number;
+  height: number;
+  className?: string;
+}) {
   return (
-    <video className={className} autoPlay muted loop playsInline preload="none" aria-hidden="true">
+    <video className={className} width={width} height={height} autoPlay muted loop playsInline aria-hidden="true">
       <source src={src} type="video/webm" />
     </video>
   );

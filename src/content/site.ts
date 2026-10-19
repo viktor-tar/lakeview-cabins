@@ -9,14 +9,14 @@ export const CONTACT = {
 /** Snazzy Maps embed used in the map popups. */
 export const MAP_EMBED = "https://snazzymaps.com/embed/624287";
 
-/** Short looping clips beside the content blocks. */
+/** Short looping clips (transparent WebM) beside the content blocks. */
 export const CLIPS = {
   /** Beside the "Here Rustic Charm" heading and in the menu's directions panel. */
-  road: "/media/clips/u2sghrtatxups3ad6drd.webm",
+  road: { src: "/media/clips/u2sghrtatxups3ad6drd.webm", width: 1000, height: 1000 },
   /** Above the "No matter where you are" text. */
-  windows: "/media/clips/pjdar7hdoygf6l6pq84q.webm",
+  windows: { src: "/media/clips/pjdar7hdoygf6l6pq84q.webm", width: 1250, height: 1080 },
   /** Above the gondola text. */
-  gondola: "/media/clips/raiziveczkvjkb090hol.webm",
+  gondola: { src: "/media/clips/raiziveczkvjkb090hol.webm", width: 1200, height: 1000 },
 };
 
 export const LANDMARKS = {

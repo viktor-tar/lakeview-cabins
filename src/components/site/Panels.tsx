@@ -109,7 +109,7 @@ export function DirectionsPanel() {
       </div>
       <div className={styles.split}>
         <div className={styles.text}>
-          <LoopClip src={CLIPS.road} className={styles.clip} />
+          <LoopClip {...CLIPS.road} className={styles.clip} />
           <p>{DIRECTIONS.text}</p>
         </div>
         <Photos images={DIRECTIONS.images} />

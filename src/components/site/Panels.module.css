@@ -117,7 +117,9 @@
   margin: 0 auto;
 }
 .clip {
+  display: block;
   width: 300px;
+  height: auto;
   margin-bottom: 20px;
 }
 
