@@ -6,6 +6,7 @@ import { fmtMoney, fmtShort } from "@/components/booking/format";
 import { StatusBadge, paymentLabel } from "@/components/staff/StatusBadge";
 import { todayIn } from "@/lib/booking/dates";
 import { connection } from "next/server";
+import { cx } from "@/app/staff/cx";
 
 export const metadata: Metadata = { title: "Requests" };
 
@@ -33,15 +34,15 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
 
   return (
     <>
-      <div className="page-head">
+      <div className={cx("page-head")}>
         <h1>Booking requests</h1>
-        <form className="search" role="search">
+        <form className={cx("search")} role="search">
           <input type="hidden" name="tab" value={tab} />
           <input name="q" defaultValue={q} placeholder="Search name, email or reference" aria-label="Search bookings" />
-          <button className="btn btn-sm">Search</button>
+          <button className={cx("btn btn-sm")}>Search</button>
         </form>
       </div>
-      <nav className="tabs" aria-label="Filter">
+      <nav className={cx("tabs")} aria-label="Filter">
         {TABS.map((t) => (
           <Link
             key={t.key}
@@ -49,13 +50,13 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
             aria-current={tab === t.key ? "page" : undefined}
           >
             {t.label}
-            {t.key === "pending" && pendingCount > 0 && <span className="count">{pendingCount}</span>}
+            {t.key === "pending" && pendingCount > 0 && <span className={cx("count")}>{pendingCount}</span>}
           </Link>
         ))}
       </nav>
 
       {rows.length === 0 ? (
-        <p className="empty">
+        <p className={cx("empty")}>
           {q
             ? `Nothing matches “${q}”.`
             : tab === "pending"
@@ -63,8 +64,8 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
               : "No bookings yet."}
         </p>
       ) : (
-        <div className="table-wrap">
-          <table className="table">
+        <div className={cx("table-wrap")}>
+          <table className={cx("table")}>
             <thead>
               <tr>
                 <th>Reference</th>
@@ -82,7 +83,7 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
                 return (
                   <tr key={b.id}>
                     <td>
-                      <Link href={`/staff/bookings/${b.id}`} className="ref">
+                      <Link href={`/staff/bookings/${b.id}`} className={cx("ref")}>
                         {b.reference}
                       </Link>
                     </td>
@@ -92,21 +93,23 @@ export default async function RequestsPage({ searchParams }: { searchParams: Pro
                       ) : (
                         <>
                           {b.guest_name}
-                          <span className="sub">{b.guest_email}</span>
+                          <span className={cx("sub")}>{b.guest_email}</span>
                         </>
                       )}
                     </td>
                     <td>
                       {fmtShort(b.check_in)} → {fmtShort(b.check_out)}
-                      <span className="sub">
+                      <span className={cx("sub")}>
                         {b.nights ?? ""}
                         {b.nights ? " nights" : ""}
                       </span>
                     </td>
                     <td>{b.guests ?? "—"}</td>
                     <td>{b.total_cents != null ? fmtMoney(b.total_cents, b.currency) : "—"}</td>
-                    <td>{lapsed ? <span className="badge badge-expired">Expiring</span> : <StatusBadge b={b} />}</td>
-                    <td className="sub-cell">{b.kind === "block" ? "—" : paymentLabel(b.payment_status)}</td>
+                    <td>
+                      {lapsed ? <span className={cx("badge badge-expired")}>Expiring</span> : <StatusBadge b={b} />}
+                    </td>
+                    <td className={cx("sub-cell")}>{b.kind === "block" ? "—" : paymentLabel(b.payment_status)}</td>
                   </tr>
                 );
               })}

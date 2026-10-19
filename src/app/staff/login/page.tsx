@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LoginForm } from "./LoginForm";
 import { DEMO_STAFF } from "@/lib/booking/demo";
 import { connection } from "next/server";
+import { cx } from "@/app/staff/cx";
 
 export const metadata: Metadata = { title: "Staff login" };
 
@@ -16,9 +17,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
   } catch {}
   const showDemo = process.env.DEMO_MODE === "true";
   return (
-    <main className="login">
-      <div className="login-card">
-        <p className="brand">Lakeview Cabins</p>
+    <main className={cx("login")}>
+      <div className={cx("login-card")}>
+        <p className={cx("brand")}>Lakeview Cabins</p>
         <h1>Staff login</h1>
         <LoginForm next={next} demo={showDemo ? DEMO_STAFF : undefined} />
       </div>

@@ -8,6 +8,7 @@ import { fmtLong, fmtMoney } from "@/components/booking/format";
 import { StatusBadge, paymentLabel } from "@/components/staff/StatusBadge";
 import { BookingActions } from "./BookingActions";
 import { connection } from "next/server";
+import { cx } from "@/app/staff/cx";
 
 export const metadata: Metadata = { title: "Booking" };
 
@@ -52,21 +53,21 @@ export default async function BookingPage({
 
   return (
     <>
-      <p className="crumbs">
+      <p className={cx("crumbs")}>
         <Link href="/staff">← All requests</Link>
       </p>
-      {created && <p className="alert alert-ok">Booking created and confirmed.</p>}
-      <div className="page-head">
+      {created && <p className={cx("alert alert-ok")}>Booking created and confirmed.</p>}
+      <div className={cx("page-head")}>
         <h1>
-          {isBlock ? "Blocked dates" : b.guest_name} <span className="ref">{b.reference}</span>
+          {isBlock ? "Blocked dates" : b.guest_name} <span className={cx("ref")}>{b.reference}</span>
         </h1>
         <StatusBadge b={b} />
       </div>
 
-      <div className="detail-grid">
-        <section className="card">
+      <div className={cx("detail-grid")}>
+        <section className={cx("card")}>
           <h2>Stay</h2>
-          <dl className="kv">
+          <dl className={cx("kv")}>
             <dt>Check-in</dt>
             <dd>{fmtLong(b.check_in)}</dd>
             <dt>Check-out</dt>
@@ -101,9 +102,9 @@ export default async function BookingPage({
         </section>
 
         {!isBlock && (
-          <section className="card">
+          <section className={cx("card")}>
             <h2>Guest</h2>
-            <dl className="kv">
+            <dl className={cx("kv")}>
               <dt>Name</dt>
               <dd>{b.guest_name}</dd>
               <dt>Email</dt>
@@ -115,14 +116,14 @@ export default async function BookingPage({
               <dt>Source</dt>
               <dd>{b.source === "guest" ? "Website" : b.source === "staff" ? "Added by staff" : "Sample data"}</dd>
             </dl>
-            {b.message && <blockquote className="message">{b.message}</blockquote>}
+            {b.message && <blockquote className={cx("message")}>{b.message}</blockquote>}
           </section>
         )}
 
         {!isBlock && (
-          <section className="card">
+          <section className={cx("card")}>
             <h2>Payment</h2>
-            <dl className="kv">
+            <dl className={cx("kv")}>
               <dt>Total</dt>
               <dd>
                 <strong>{b.total_cents != null ? fmtMoney(b.total_cents, b.currency) : "—"}</strong>
@@ -141,22 +142,22 @@ export default async function BookingPage({
           </section>
         )}
 
-        <section className="card">
+        <section className={cx("card")}>
           <h2>Actions</h2>
           <BookingActions id={b.id} kind={b.kind} status={b.status} paymentStatus={b.payment_status} lapsed={lapsed} />
         </section>
 
-        <section className="card span-2">
+        <section className={cx("card span-2")}>
           <h2>History</h2>
-          <ol className="timeline">
+          <ol className={cx("timeline")}>
             {events.map((e, i) => (
               <li key={i}>
                 <strong>{EVENT_LABEL[e.type] ?? e.type}</strong>
-                <span className="sub">
+                <span className={cx("sub")}>
                   {dt.format(e.created_at)} · {e.actor}
                 </span>
                 {(e.data as { reason?: string } | null)?.reason && (
-                  <span className="sub">“{(e.data as { reason: string }).reason}”</span>
+                  <span className={cx("sub")}>“{(e.data as { reason: string }).reason}”</span>
                 )}
               </li>
             ))}
