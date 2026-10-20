@@ -118,3 +118,8 @@ e2e/                 Playwright tests
 3. Stripe's webhook marks the payment as authorised and the guest gets a "request received" email.
 4. Staff approve (the payment is captured) or decline (the authorisation is released) in the dashboard.
 5. A daily cron job expires lapsed holds, anonymises old guest details and, in demo mode, resets the data.
+
+## Author
+
+Built by **Victor Tar** · [LinkedIn](https://www.linkedin.com/in/viktor-tar/) ·
+[GitHub](https://github.com/viktor-tar). Developed with AI-assisted tooling (Claude Code).
