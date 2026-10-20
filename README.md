@@ -10,6 +10,8 @@ charged once staff approve the request in the dashboard.
 > **Portfolio project.** The booking system runs in demo mode: reservations are not real, payments use Stripe
 > test mode, and the data resets every night.
 
+![Scrolling down the home page: the car drives along the road from day to night](docs/scroll-animation.gif)
+
 ## Highlights
 
 - **Scroll-driven road animation.** A car drives down a winding road while the page scrolls, switching from day
@@ -111,6 +113,10 @@ e2e/                 Playwright tests
 ```
 
 ## How a booking works
+
+![Picking dates, requesting a stay, then signing in to the staff dashboard to review it](docs/booking-and-staff-dashboard.gif)
+
+_Recorded locally without Stripe keys, so the request is confirmed straight away instead of going through Stripe Checkout._
 
 1. The calendar loads public availability (dates only, never guest details) from `/api/calendar`.
 2. Submitting the form creates a `pending` booking that holds the dates, then redirects to Stripe Checkout
