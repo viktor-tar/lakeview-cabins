@@ -24,8 +24,9 @@ charged once staff approve the request in the dashboard.
 - **Staff dashboard.** Approve, decline or cancel requests (capturing or releasing the payment), add bookings or
   block dates, and see everything on a month calendar.
 - **Booking emails.** Guests and the owner get status emails through Gmail SMTP.
-- **One booking state, two layouts.** The hero calendar and the "Book now" popup share a TanStack Query cache and
-  a small Zustand store, so dates picked in one carry over to the other.
+- **One booking state, two layouts.** The booking calendar appears twice: in the hero and in the "Book now"
+  popup. Both share a TanStack Query cache and a small Zustand store, so dates picked in the hero calendar are
+  already selected when the popup opens, and the other way round.
 - **Accessible UI.** Native `<dialog>` popups, keyboard navigation in the calendar and photo viewer,
   `prefers-reduced-motion` respected throughout.
 
