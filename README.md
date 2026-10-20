@@ -1,8 +1,8 @@
 # Lakeview Cabins
 
 A marketing site and booking system for a waterfront timber cabin on Howe Sound, near Squamish, BC.
-Guests check availability, pick dates and request a stay; the card is authorised through Stripe and only
-charged once staff approve the request in the dashboard.
+Guests check availability, pick dates and request a stay. The payment is reserved on their card through Stripe
+and only charged once staff approve the request in the dashboard.
 
 **Live demo:** [lakeview-cabins.vercel.app](https://lakeview-cabins.vercel.app) · staff dashboard at
 [/staff](https://lakeview-cabins.vercel.app/staff) (the demo login is shown on the sign-in page)
@@ -17,18 +17,23 @@ charged once staff approve the request in the dashboard.
 - **Scroll-driven road animation.** A car drives down a winding road while the page scrolls, switching from day
   to night halfway down. It is a 330-frame WebP sequence drawn on a `<canvas>` with GSAP
   ScrollTrigger.
-- **No double bookings, by construction.** A Postgres exclusion constraint
-  (`EXCLUDE USING gist (stay WITH &&)`) rejects overlapping stays, even under concurrent requests.
-- **Holds and payments.** A request holds the dates while the guest completes Stripe Checkout with
-  manual capture. Webhooks are signature-verified and idempotent, and unpaid holds lapse on their own.
-- **Staff dashboard.** Approve, decline or cancel requests (capturing or releasing the payment), add bookings or
-  block dates, and see everything on a month calendar.
+- **No double bookings.** The database itself refuses to save two stays with overlapping dates, even if two
+  guests submit the same dates at the same moment. This is a Postgres exclusion constraint
+  (`EXCLUDE USING gist (stay WITH &&)`), so it doesn't depend on the app's own checks.
+- **Holds and payments.** Sending a request holds the dates while the guest pays on Stripe Checkout. At this
+  point Stripe only reserves the money on the card (manual capture). Stripe reports this back to the site through
+  a webhook; the site checks each report's signature, so it can't be faked, and handles a repeated report only
+  once. The card is charged only when staff approve. If the guest never pays, the hold expires on its own and the
+  dates free up.
+- **Staff dashboard.** Staff approve a request (the card is charged), decline or cancel it (the reserved money
+  goes back to the guest), add bookings themselves, block dates, and see everything on a month calendar.
 - **Booking emails.** Guests and the owner get status emails through Gmail SMTP.
 - **One booking state, two layouts.** The booking calendar appears twice: in the hero and in the "Book now"
   popup. Both share a TanStack Query cache and a small Zustand store, so dates picked in the hero calendar are
   already selected when the popup opens, and the other way round.
-- **Accessible UI.** Native `<dialog>` popups, keyboard navigation in the calendar and photo viewer,
-  `prefers-reduced-motion` respected throughout.
+- **Accessible UI.** Popups are built on the browser's own `<dialog>` element, so focus and the Escape key work
+  as expected. The calendar and the photo viewer can be used with the keyboard alone, and animations calm down
+  for visitors whose device is set to reduce motion (`prefers-reduced-motion`).
 
 ## Tech stack
 
@@ -119,12 +124,15 @@ e2e/                 Playwright tests
 
 _Recorded locally without Stripe keys, so the request is confirmed straight away instead of going through Stripe Checkout._
 
-1. The calendar loads public availability (dates only, never guest details) from `/api/calendar`.
-2. Submitting the form creates a `pending` booking that holds the dates, then redirects to Stripe Checkout
-   with manual capture.
-3. Stripe's webhook marks the payment as authorised and the guest gets a "request received" email.
-4. Staff approve (the payment is captured) or decline (the authorisation is released) in the dashboard.
-5. A daily cron job expires lapsed holds, anonymises old guest details and, in demo mode, resets the data.
+1. The calendar asks the server which dates are taken (`/api/calendar`). It gets dates only, never guest
+   details.
+2. The guest picks dates and sends the form. The site saves the request as `pending`, which holds those dates,
+   and sends the guest to Stripe Checkout. Stripe reserves the money on the card but doesn't charge it yet.
+3. Stripe tells the site the payment is reserved (webhook), and the guest gets a "request received" email.
+4. Staff open the request in the dashboard. Approving it charges the card; declining it releases the reserved
+   money back to the guest. Either way, the guest gets an email.
+5. Once a day an automatic job (a cron job) frees dates held by requests that were never paid, removes old
+   guests' personal details and, in demo mode, resets the sample data.
 
 ## Author
 
