@@ -22,31 +22,32 @@ type SeedStay = {
 };
 type SeedBlock = { start: number; nights: number; note: string };
 
+// About a quarter of the nights over the next ~11 weeks are taken, with gaps in between, so the
+// calendar looks lived-in without looking fully booked. Each state (confirmed, pending, blocked) appears.
 const STAYS: SeedStay[] = [
-  { start: 3, nights: 3, guests: 2, breakfast: true, name: "Maya Thompson", status: "approved" },
+  { start: 4, nights: 3, guests: 2, breakfast: true, name: "Maya Thompson", status: "approved" },
   {
-    start: 9,
+    start: 13,
     nights: 2,
-    guests: 4,
-    breakfast: false,
-    name: "Liam & Chloe Bennett",
-    status: "approved",
-    message: "Travelling with two kids",
-  },
-  {
-    start: 16,
-    nights: 5,
     guests: 2,
     breakfast: true,
     name: "Noah Fischer",
     status: "pending",
     message: "Anniversary trip — is the canoe available?",
   },
-  { start: 27, nights: 4, guests: 3, breakfast: false, name: "Sofia Alvarez", status: "approved" },
-  { start: 38, nights: 2, guests: 2, breakfast: true, name: "Ethan Park", status: "pending" },
-  { start: 47, nights: 7, guests: 4, breakfast: true, name: "The Okafor family", status: "approved" },
   {
-    start: 62,
+    start: 24,
+    nights: 4,
+    guests: 4,
+    breakfast: false,
+    name: "Liam & Chloe Bennett",
+    status: "approved",
+    message: "Travelling with two kids",
+  },
+  { start: 45, nights: 2, guests: 2, breakfast: true, name: "Ethan Park", status: "pending" },
+  { start: 58, nights: 5, guests: 4, breakfast: true, name: "The Okafor family", status: "approved" },
+  {
+    start: 75,
     nights: 3,
     guests: 1,
     breakfast: false,
@@ -54,12 +55,8 @@ const STAYS: SeedStay[] = [
     status: "approved",
     message: "Writing retreat, quiet week please",
   },
-  { start: 75, nights: 2, guests: 2, breakfast: false, name: "Oliver Grant", status: "approved" },
 ];
-const BLOCKS: SeedBlock[] = [
-  { start: 22, nights: 2, note: "Dock maintenance" },
-  { start: 56, nights: 3, note: "Owner stay" },
-];
+const BLOCKS: SeedBlock[] = [{ start: 34, nights: 2, note: "Dock maintenance" }];
 
 const emailFor = (name: string) =>
   name
