@@ -1,6 +1,6 @@
 // Guards against a client that returns timestamps as strings (which silently breaks hold-expiry checks).
 import { afterAll, expect, it } from "vitest";
-import { createSql } from "../src/db";
+import { createSql } from "../src/lib/server/sql";
 
 const sql = createSql(process.env.TEST_DATABASE_URL ?? "postgres://app@localhost:5433/lakeview_test");
 afterAll(() => sql.end());

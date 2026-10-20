@@ -5,6 +5,7 @@ import "@fontsource/lato/700.css";
 import "@fontsource/poppins/400.css";
 import "@fontsource/pt-serif/400.css";
 import "./globals.css";
+import { share } from "@/lib/share";
 
 export const metadata: Metadata = {
   metadataBase: new URL(
@@ -15,6 +16,12 @@ export const metadata: Metadata = {
   title: { default: "Lakeview Cabins", template: "%s · Lakeview Cabins" },
   description: "Waterfront wooden cabin on Howe Sound near Squamish, BC.",
   icons: { icon: "/media/favicon2.jpg", apple: "/media/webclip.png" },
+  // Default link preview; pages override it with their own title and image.
+  ...share(
+    "Lakeview Cabin Rentals in Squamish | Lakeview Cabins",
+    "Experience the breathtaking beauty of Howe Sound from the comfort of our waterfront wooden cabin in Squamish.",
+    "/media/home1.jpg",
+  ),
 };
 
 export const viewport: Viewport = { themeColor: "#08131f" };

@@ -1,6 +1,6 @@
 import nodemailer from "nodemailer";
 import { afterAll, beforeEach, describe, expect, it, vi } from "vitest";
-import { createSql } from "../src/db";
+import { createSql } from "../src/lib/server/sql";
 import { addDays, todayIn } from "../src/lib/booking/dates";
 import { createGuestRequest, markPaymentAuthorized } from "../src/lib/booking/service";
 import { isDeliverable, sendBookingEmail, setTransportForTests } from "../src/lib/email/mailer";

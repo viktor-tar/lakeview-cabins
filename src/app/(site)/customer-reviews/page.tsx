@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { share } from "@/lib/share";
 import Image from "next/image";
 import { ReviewsWidget } from "@/components/reviews/ReviewsWidget";
 import { ArrowLink } from "@/components/site/ArrowLink";
@@ -7,6 +8,11 @@ import styles from "@/components/reviews/Reviews.module.css";
 export const metadata: Metadata = {
   title: "Guest Reviews",
   description: "What guests say about their stay at the Lakeview cabin on Howe Sound near Squamish, BC.",
+  ...share(
+    "Guest Reviews | Lakeview Cabins, Squamish",
+    "You don’t just have to take our word for it. Read what our guests say about their stay at our cabin.",
+    "/media/customerreviews.jpg",
+  ),
 };
 
 export default function ReviewsPage() {

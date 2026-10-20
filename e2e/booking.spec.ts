@@ -1,24 +1,28 @@
 import { expect, test, type Locator } from "@playwright/test";
 
-/** Clicks the first bookable day, then a bookable day at least `nights` later (moving to next month if needed). */
+/**
+ * Picks a stay of at least `nights` nights. Clicks a check-in day, then a later free day; if a booked stay sits in
+ * between, that click becomes the new check-in (as it does for a real guest), so it keeps going from there.
+ */
 async function pickStay(cal: Locator, nights = 3) {
   const free = cal.locator("button[data-date]:not([aria-disabled])");
-  // Find the first month with a bookable day.
+  const done = cal.getByRole("button", { name: "Clear dates" });
   for (let m = 0; m < 6 && (await free.count()) === 0; m++)
     await cal.getByRole("button", { name: "Next month" }).click();
-  const checkIn = (await free.first().getAttribute("data-date"))!;
+  let checkIn = (await free.first().getAttribute("data-date"))!;
   await free.first().click();
-  for (let attempt = 0; attempt < 3; attempt++) {
-    for (const day of await free.all()) {
+  for (let month = 0; month < 4; month++) {
+    for (let i = 0; i < (await free.count()); i++) {
+      const day = free.nth(i);
       const d = (await day.getAttribute("data-date"))!;
-      if ((Date.parse(d) - Date.parse(checkIn)) / 864e5 >= nights) {
-        await day.click();
-        return;
-      }
+      if ((Date.parse(d) - Date.parse(checkIn)) / 864e5 < nights) continue;
+      await day.click();
+      if (await done.isVisible()) return;
+      checkIn = d; // it became the new check-in
     }
     await cal.getByRole("button", { name: "Next month" }).click();
   }
-  throw new Error("No bookable check-out date found");
+  throw new Error("No bookable stay found");
 }
 
 test("dates picked in the hero carry over to the booking popup, and a request can be sent", async ({ page }) => {
