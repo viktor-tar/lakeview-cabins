@@ -4,6 +4,9 @@ A marketing site and booking system for a waterfront timber cabin on Howe Sound,
 Guests check availability, pick dates and request a stay; the card is authorised through Stripe and only
 charged once staff approve the request in the dashboard.
 
+**Live demo:** [lakeview-cabins.vercel.app](https://lakeview-cabins.vercel.app) · staff dashboard at
+[/staff](https://lakeview-cabins.vercel.app/staff) (the demo login is shown on the sign-in page)
+
 > **Portfolio project.** The booking system runs in demo mode: reservations are not real, payments use Stripe
 > test mode, and the data resets every night.
 
