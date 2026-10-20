@@ -13,8 +13,8 @@ charged once staff approve the request in the dashboard.
 ## Highlights
 
 - **Scroll-driven road animation.** A car drives down a winding road while the page scrolls, switching from day
-  to night halfway down. It is a 330-frame WebP sequence drawn on a `<canvas>` with GSAP ScrollTrigger
-  (10 MB, loaded progressively in passes), replacing 56 MB of Lottie JSON.
+  to night halfway down. It is a 330-frame WebP sequence drawn on a `<canvas>` with GSAP
+  ScrollTrigger.
 - **No double bookings, by construction.** A Postgres exclusion constraint
   (`EXCLUDE USING gist (stay WITH &&)`) rejects overlapping stays, even under concurrent requests.
 - **Holds and payments.** A request holds the dates while the guest completes Stripe Checkout with
